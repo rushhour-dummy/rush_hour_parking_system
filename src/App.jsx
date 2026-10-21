@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParking } from './UseParking.js';
+import { useParking } from './useParking.js';
 import Login from './Login.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import MobileHeader from './components/MobileHeader.jsx';
@@ -13,7 +13,7 @@ import ActivityLog from './components/ActivityLog.jsx';
 const LOT_NAME = 'Rush Hour Parking';
 const LOT_ADDRESS = '[ADDRESS]';
 
-export const NAV_ITEMS = [
+const NAV_ITEMS = [
   { label: 'Overview', href: '#overview' },
   { label: 'Spots', href: '#spots' },
   { label: 'Map', href: '#map' },
@@ -42,7 +42,7 @@ export default function App() {
         <header className="page-header">
           <div>
 
-            {/* <div className="muted">{LOT_NAME} </div> */}
+            { <div className="muted">{LOT_NAME} . {LOT_ADDRESS} </div> }
             
             <h1>Parking Dashboard</h1>
           </div>
