@@ -1,19 +1,18 @@
-export default function SummaryCards({ level, counts }) {
-  const total = counts.free + counts.occupied + counts.reserved;
-
-  const stats = [
-    { label: `Free on ${level}`, value: counts.free },
-    { label: `Occupied on ${level}`, value: counts.occupied },
-    { label: `Reserved on ${level}`, value: counts.reserved },
-    { label: `Total spots on ${level}`, value: total },
+export default function SummaryCards({ level, counts, rate }) {
+  const levelName = `Level ${level.slice(1)}`;
+  const cards = [
+    { label: `Available on ${levelName}`, value: counts.free },
+    { label: 'Occupied', value: counts.occupied },
+    { label: 'Reserved', value: counts.reserved },
+    { label: 'Hourly rate', value: rate ? `$${rate}` : '[$/HR]', small: !rate },
   ];
 
   return (
     <section className="summary" aria-label="Summary">
-      {stats.map((s) => (
-        <div key={s.label} className="card stat">
-          <div className="stat-label">{s.label}</div>
-          <div className="stat-value">{s.value}</div>
+      {cards.map((c) => (
+        <div key={c.label} className="card stat">
+          <div className="stat-label">{c.label}</div>
+          <div className={`stat-value${c.small ? ' stat-value-sm' : ''}`}>{c.value}</div>
         </div>
       ))}
     </section>

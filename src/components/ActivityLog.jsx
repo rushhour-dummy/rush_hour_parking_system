@@ -1,8 +1,9 @@
 export default function ActivityLog({ entries }) {
   return (
-    <section id="activity" className="card">
+    <section id="activity" className="card activity" aria-label="Recent activity">
       <h2>Recent activity</h2>
 
+      {/* Desktop: table */}
       <div className="table-wrap only-desktop-block">
         <table>
           <thead>
@@ -15,29 +16,30 @@ export default function ActivityLog({ entries }) {
             </tr>
           </thead>
           <tbody>
-            {entries.map((e, i) => (
-              <tr key={`${e.time}-${e.spot}-${i}`}>
-                <td className="mono">{e.time}</td>
-                <td className="mono">{e.plate}</td>
-                <td className="mono">{e.spot}</td>
-                <td>{e.event}</td>
-                <td className="mono">{e.amount}</td>
+            {entries.map((r, i) => (
+              <tr key={`${r.time}-${r.spot}-${i}`}>
+                <td className="mono">{r.time}</td>
+                <td className="mono">{r.plate}</td>
+                <td>{r.spot}</td>
+                <td>{r.event}</td>
+                <td>{r.amount}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
+      {/* Mobile: stacked list */}
       <ul className="activity-list only-mobile-block">
-        {entries.map((e, i) => (
-          <li key={`${e.time}-${e.spot}-${i}`}>
+        {entries.map((r, i) => (
+          <li key={`${r.time}-${r.spot}-${i}`}>
             <div>
-              <div className="mono">{e.plate}</div>
-              <div className="muted small">{e.event} · {e.spot}</div>
+              <div className="mono">{r.plate}</div>
+              <div className="muted small">{r.event} · {r.spot}</div>
             </div>
             <div className="activity-right">
-              <span className="mono">{e.time}</span>
-              <span className="muted small">{e.amount}</span>
+              <div className="mono muted small">{r.time}</div>
+              <div className="small">{r.amount}</div>
             </div>
           </li>
         ))}

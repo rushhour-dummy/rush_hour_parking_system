@@ -1,3 +1,5 @@
+// Sample data. Replace with calls to your web app's API / MySQL backend.
+
 export const LEVELS = ['L1', 'L2', 'L3'];
 export const SPOTS_PER_LEVEL = 24;
 

@@ -1,21 +1,22 @@
-import { LEVELS, STATUS_LABEL } from '../data.js';
+import { LEVELS } from '../data.js';
 
 export default function SpotGrid({ level, onLevelChange, spots, selected, onSelect }) {
   return (
-    <section id="spots" className="card spots">
+    <section id="spots" className="card spots" aria-label="Spot map">
       <div className="card-head">
-        <h2>Spots · {level}</h2>
-        <div className="level-tabs" role="tablist" aria-label="Level">
-          {LEVELS.map((l) => (
+        <h2>Spots</h2>
+        <div role="group" aria-label="Level" className="level-tabs">
+          {LEVELS.map((lv) => (
             <button
-              key={l}
+              key={lv}
               type="button"
-              role="tab"
-              aria-selected={l === level}
-              className={`level-btn${l === level ? ' is-active' : ''}`}
-              onClick={() => onLevelChange(l)}
+              className={`level-btn${lv === level ? ' is-active' : ''}`}
+              aria-pressed={lv === level}
+              aria-label={`Level ${lv.slice(1)}`}
+              onClick={() => onLevelChange(lv)}
             >
-              {l}
+              <span className="only-desktop">Level {lv.slice(1)}</span>
+              <span className="only-mobile">{lv}</span>
             </button>
           ))}
         </div>
@@ -26,20 +27,20 @@ export default function SpotGrid({ level, onLevelChange, spots, selected, onSele
           <button
             key={s.id}
             type="button"
-            className={`spot spot-${s.status}${selected === s.id ? ' is-selected' : ''}`}
-            aria-label={`Spot ${s.id}, ${STATUS_LABEL[s.status]}`}
-            aria-pressed={selected === s.id}
+            className={`spot spot-${s.status}${s.id === selected ? ' is-selected' : ''}`}
+            aria-label={`Spot ${s.id}, ${s.status}`}
+            aria-pressed={s.id === selected}
             onClick={() => onSelect(s.id)}
           >
-            {s.id.split('-')[1]}
+            {s.id.slice(3)}
           </button>
         ))}
       </div>
 
       <div className="legend">
-        <span><i className="swatch swatch-free" /> Free</span>
-        <span><i className="swatch swatch-occupied" /> Occupied</span>
-        <span><i className="swatch swatch-reserved" /> Reserved</span>
+        <span><i className="swatch spot-free" />Free</span>
+        <span><i className="swatch spot-occupied" />Occupied</span>
+        <span><i className="swatch spot-reserved" />Reserved</span>
       </div>
     </section>
   );

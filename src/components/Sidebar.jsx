@@ -1,31 +1,23 @@
-export default function Sidebar({ items, active, onNavigate, user, onSignOut }) {
+export default function Sidebar({ items, active, onNavigate }) {
   return (
-    <aside className="sidebar">
+    <nav className="sidebar" aria-label="Main">
       <div className="brand">
-        <div className="brand-mark">R</div>
-        <div className="brand-name">Rush Hour</div>
+        <div className="brand-mark">P</div>
+        <div className="brand-name">ParkSpot</div>
       </div>
-
-      <nav className="nav-list" aria-label="Main">
+      <div className="nav-list">
         {items.map((item) => (
           <a
             key={item.label}
             href={item.href}
             className={`nav-link${active === item.label ? ' is-active' : ''}`}
-            onClick={() => onNavigate(item.label)}
+            aria-current={active === item.label ? 'page' : undefined}
+            onClick={() => onNavigate(item)}
           >
             {item.label}
           </a>
         ))}
-      </nav>
-
-      <div className="account">
-        <div className="account-note">{user.guest ? 'Browsing as guest' : 'Signed in as'}</div>
-        <div className="account-name">{user.name}</div>
-        <button type="button" className="btn-ghost" onClick={onSignOut}>
-          {user.guest ? 'Back to login' : 'Sign out'}
-        </button>
       </div>
-    </aside>
+    </nav>
   );
 }
