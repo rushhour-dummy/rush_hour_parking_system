@@ -4,14 +4,20 @@ export default function CheckInForm({ onCheckIn }) {
   const [plate, setPlate] = useState('');
   const [error, setError] = useState('');
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const value = plate.trim().toUpperCase();
     if (!value) {
       setError('Enter a plate number first.');
       return;
     }
-    const spot = onCheckIn(value);
+    let spot;
+    try {
+      spot = await onCheckIn(value);
+    } catch {
+      setError('Could not reach the server. Try again.');
+      return;
+    }
     if (spot === undefined) return; // signed out: the sign-in pop-up opened instead
     if (!spot) {
       setError('No free spots on this level.');
