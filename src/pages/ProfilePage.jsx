@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import PhoneInput, { formatPhone, phoneError } from '../components/PhoneInput.jsx';
 import { initials, useAuth } from '../auth.jsx';
+import { useSettings } from '../settings.jsx';
 
 export default function ProfilePage() {
   const { user, updateProfile, changePassword } = useAuth();
-  const [form, setForm] = useState({ name: user.name, email: user.email, phone: user.phone || '' });
+  const { settings } = useSettings();
+  const [form, setForm] = useState({ name: user.name, email: user.email, phone: formatPhone(user.phone) });
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
 
@@ -21,8 +24,13 @@ export default function ProfilePage() {
     e.preventDefault();
     if (!form.name.trim()) return setError('Name is required.');
     if (!form.email.includes('@')) return setError('Enter a valid email address.');
-    await updateProfile({ name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() });
-    setStatus('Profile saved.');
+    try {
+      if (phoneError(form.phone)) throw new Error(phoneError(form.phone));
+      await updateProfile({ name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() });
+      setStatus('Profile saved.');
+    } catch (err) {
+      setError(err.message);
+    }
   }
 
   async function savePassword(e) {
@@ -66,7 +74,7 @@ export default function ProfilePage() {
           </label>
           <label className="form-field">
             <span>Phone</span>
-            <input type="tel" autoComplete="tel" placeholder="Optional" value={form.phone} onChange={set('phone')} />
+            <PhoneInput autoComplete="tel" value={form.phone} onChange={(phone) => setForm({ ...form, phone })} />
           </label>
           <label className="form-field">
             <span>Role</span>
@@ -103,6 +111,7 @@ export default function ProfilePage() {
           <button type="submit" className="btn-outline btn-pad">Update password</button>
         </div>
       </form>
+
     </div>
   );
 }

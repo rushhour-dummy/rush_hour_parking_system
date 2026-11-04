@@ -1,0 +1,22 @@
+# Local MySQL for development:  docker compose up -d
+# Then:  cd server && cp .env.example .env && npm install && npm run db:setup:sample
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_dev_only
+      MYSQL_DATABASE: parkspot
+      MYSQL_USER: parkspot
+      MYSQL_PASSWORD: parkspot_dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - parkspot-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  parkspot-mysql:

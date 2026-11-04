@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from 'react';
 import { load, save } from './storage.js';
 
@@ -7,9 +6,8 @@ const KEY = 'parkspot.settings'; // Key used for storing settings in local stora
 
 // Default settings for the application, including lot name, address, hourly rate, and notification preferences.
 export const DEFAULT_SETTINGS = {
-  lotName: '[YOUR LOT NAME]',
-  address: '[ADDRESS]',
-  hourlyRate: '',
+  // Lot name, address and hourly rate aren't here: they're lot-wide, saved in the
+  // database, and only admins can change them (Settings → Parking lot).
   defaultLevel: 'L1',
   timeFormat: '24h',
   notifyReservations: true,

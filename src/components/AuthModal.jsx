@@ -28,8 +28,8 @@ export default function AuthModal({ open, mode, onModeChange, onClose, message }
         <div className="auth-body">
           <div className="auth-head">
             <div className="brand login-brand">
-              <div className="brand-mark brand-mark-sm">P</div>
-              <div className="brand-name">ParkSpot</div>
+              <div className="brand-mark brand-mark-sm">R</div>
+              <div className="brand-name">RushHourParkingSystem</div>
             </div>
             <button type="button" className="close-btn" aria-label="Close" onClick={onClose}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">

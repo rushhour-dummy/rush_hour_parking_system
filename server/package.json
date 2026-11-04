@@ -1,0 +1,27 @@
+{
+  "name": "rushhour-parking-system-api",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "API server for the RushHourParkingSystem app. Talks to MySQL; the browser never connects to the database directly.",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "db:check": "node scripts/check-db.js",
+    "db:setup": "node scripts/setup-db.js",
+    "db:setup:sample": "node scripts/setup-db.js --sample",
+    "create-admin": "node scripts/create-admin.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0"
+  }
+}
