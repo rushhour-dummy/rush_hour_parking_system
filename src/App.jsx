@@ -16,6 +16,7 @@ import AuthModal from "./components/AuthModal.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
 
+// Navigation items for the sidebar and mobile header.
 export const NAV_ITEMS = [
   { label: "Overview", view: "dashboard", href: "#overview" },
   { label: "Spots", view: "dashboard", href: "#spots" },
@@ -25,7 +26,9 @@ export const NAV_ITEMS = [
   { label: "Settings", view: "settings", href: "#settings" },
 ];
 
+// Main application component.
 export default function App() {
+  // Renders the main application shell with authentication and settings providers.
   return (
     <AuthProvider>
       <SettingsProvider>
@@ -35,6 +38,7 @@ export default function App() {
   );
 }
 
+// Renders the main application shell with sidebar, mobile header, and content area.
 function Shell() {
   const { user } = useAuth();
   // The app always launches on the main dashboard.
@@ -54,10 +58,12 @@ function Shell() {
     }
   }, [user, view]);
 
+  // Opens the authentication modal with the specified mode and message.
   function openAuth(mode = "signin", message = "") {
     setAuth({ open: true, mode, message });
   }
 
+  // Opens a view, redirecting to the sign-in modal if the user is not authenticated.
   function openView(next) {
     if (next !== "dashboard" && !user) {
       openAuth(
@@ -73,13 +79,14 @@ function Shell() {
     window.scrollTo(0, 0);
   }
 
+  // Handles navigation for sidebar and mobile header items.
   function navigate(item) {
     if (item.view !== "dashboard") return openView(item.view);
     setActive(item.label);
     setView("dashboard");
   }
 
-  // Wraps an action so signed-out visitors get the sign-in pop-up instead.
+  // Wraps an action so signed-out visitors get the sign-in pop-up instead of executing the action.
   function requireAuth(action, message) {
     return (...args) => {
       if (!user) {
@@ -90,6 +97,7 @@ function Shell() {
     };
   }
 
+  // Renders the main content area with the appropriate view based on the current state.
   return (
     <div className="app">
       {/* Navigation is for signed-in users only; guests get the landing page. */}
@@ -132,6 +140,7 @@ function Shell() {
   );
 }
 
+// Renders the dashboard view with parking overview, summary cards, spot grid, and activity log.
 function Dashboard({ requireAuth }) {
   const { user } = useAuth();
   const { settings } = useSettings();

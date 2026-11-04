@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './Login.css'
 
+// Renders the Google icon for social login.
 function GoogleIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 48 48" aria-hidden="true">
@@ -12,6 +13,7 @@ function GoogleIcon() {
   )
 }
 
+// Renders the Apple icon for social login.
 function AppleIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 384 512" aria-hidden="true" fill="currentColor">
@@ -20,23 +22,27 @@ function AppleIcon() {
   )
 }
 
+// Renders the login page with email and password fields, social login options, and a submit button.
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
 
+  // Handles the login form submission, triggering the onLogin callback with the email and a guest flag.
   function handleLogin(event) {
     event.preventDefault()
     // TODO: replace with real auth. For now any email gets you in.
     onLogin({ name: email, guest: false })
   }
 
+  // Handles social login attempts, currently showing a placeholder message.
   function handleSocialLogin(provider) {
     // TODO: replace with real OAuth (Firebase / Supabase / etc.)
     setMessage(`Sign in with ${provider} is coming soon.`)
   }
 
+  // Renders the main login page layout, including the header, form, and social login options.
   return (
     <main className="lg-page">
       <section className="lg-window">
